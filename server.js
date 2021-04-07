@@ -2,6 +2,7 @@ let express = require("express");
 let app = express();
 let bodyParser = require("body-parser");
 let assignment = require("./routes/assignments");
+let matiere = require("./routes/matieres");
 
 let mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
@@ -9,7 +10,7 @@ mongoose.Promise = global.Promise;
 
 // remplacer toute cette chaine par l'URI de connexion à votre propre base dans le cloud s
 const uri =
-  "mongodb+srv://root:root@cluster0.2uvuw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+  "mongodb+srv://root:root@cluster0.2uvuw.mongodb.net/assignments?retryWrites=true&w=majorityc";
 
 const uri2 = "mongodb://localhost:27017/assignments";
 
@@ -53,6 +54,7 @@ let port = process.env.PORT || 8010;
 const prefix = "/api";
 
 app.route(prefix + "/assignments").get(assignment.getAssignments);
+app.route(prefix + "/matieres").get(matiere.getMatieres);
 
 app
   .route(prefix + "/assignments/:id")
@@ -60,9 +62,19 @@ app
   .delete(assignment.deleteAssignment);
 
 app
+  .route(prefix + "/matieres/:id")
+  .get(matiere.getMatiere)
+  .delete(matiere.deleteMatiere);
+
+app
   .route(prefix + "/assignments")
   .post(assignment.postAssignment)
   .put(assignment.updateAssignment);
+
+  app
+  .route(prefix + "/matieres")
+  .post(matiere.postMatiere)
+  .put(matiere.updateMatiere);
 
 // On démarre le serveur
 app.listen(port, "0.0.0.0");

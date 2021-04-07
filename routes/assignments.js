@@ -29,6 +29,8 @@ function getAssignments(req, res) {
       res.send(assignments);
     }
   );
+  // const roles=Assignment.find();
+  // res.json(roles);
 }
 
 // Récupérer un assignment par son id (GET)
@@ -45,21 +47,30 @@ function getAssignment(req, res) {
 
 // Ajout d'un assignment (POST)
 function postAssignment(req, res) {
+ 
   let assignment = new Assignment();
-  assignment.id = req.body.id;
+
   assignment.nom = req.body.nom;
   assignment.dateDeRendu = req.body.dateDeRendu;
   assignment.rendu = req.body.rendu;
+  assignment.auteur= req.body.auteur;
+  assignment.remarque= req.body.remarque;
+  assignment.note= req.body.note;
+  assignment.imageProf = req.body.imageProf;
+  assignment.imageMatiere = req.body.imageMatiere;
+  //assignment.matiere=req.body.matiere._id;
+  //console.log(assignment);
+  // console.log("POST assignment reçu :");
+  // console.log(assignment);
 
-  console.log("POST assignment reçu :");
-  console.log(assignment);
-
-  assignment.save((err) => {
-    if (err) {
-      res.send("cant post assignment ", err);
-    }
-    res.json({ message: `${assignment.nom} saved!` });
-  });
+  // assignment.save((err) => {
+  //   if (err) {
+  //     res.send("cant post assignment ", err);
+  //   }
+  //   res.json({ message: `${assignment.nom} saved!` });
+  // });
+  assignment.save();
+  res.json(assignment);
 }
 
 // Update d'un assignment (PUT)
